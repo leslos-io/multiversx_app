@@ -18,8 +18,8 @@ CREATE TABLE token_prices_minute (
     token_id INT REFERENCES tokens(id),
     price NUMERIC,
     market_cap NUMERIC,
-    supply BIGINT,
-    circulating_supply BIGINT,
+    supply NUMERIC,
+    circulating_supply NUMERIC,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -29,8 +29,8 @@ CREATE TABLE token_prices_hourly (
     token_id INT REFERENCES tokens(id),
     last_price NUMERIC,
     market_cap NUMERIC,
-    supply BIGINT,
-    circulating_supply BIGINT,
+    supply NUMERIC,
+    circulating_supply NUMERIC,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -40,7 +40,7 @@ CREATE TABLE token_prices_daily (
     token_id INT REFERENCES tokens(id),
     last_price NUMERIC,
     market_cap NUMERIC,
-    supply BIGINT,
-    circulating_supply BIGINT,
+    supply NUMERIC,
+    circulating_supply NUMERIC,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
