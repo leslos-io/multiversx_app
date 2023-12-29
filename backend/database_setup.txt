@@ -1,0 +1,46 @@
+-- Create Token Master Table
+CREATE TABLE tokens (
+    id SERIAL PRIMARY KEY,
+    identifier VARCHAR(255) UNIQUE NOT NULL,
+    name VARCHAR(255),
+    ticker VARCHAR(255),
+    owner VARCHAR(255),
+    decimals INT,
+    website VARCHAR(255),
+    description TEXT,
+    logo_url VARCHAR(255),
+    social_links JSONB
+);
+
+-- Table for minute-level data (last 24 hours)
+CREATE TABLE token_prices_minute (
+    id SERIAL PRIMARY KEY,
+    token_id INT REFERENCES tokens(id),
+    price NUMERIC,
+    market_cap NUMERIC,
+    supply BIGINT,
+    circulating_supply BIGINT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table for hourly aggregated data (last price before the end of each hour)
+CREATE TABLE token_prices_hourly (
+    id SERIAL PRIMARY KEY,
+    token_id INT REFERENCES tokens(id),
+    last_price NUMERIC,
+    market_cap NUMERIC,
+    supply BIGINT,
+    circulating_supply BIGINT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table for daily aggregated data (last price before the end of each day)
+CREATE TABLE token_prices_daily (
+    id SERIAL PRIMARY KEY,
+    token_id INT REFERENCES tokens(id),
+    last_price NUMERIC,
+    market_cap NUMERIC,
+    supply BIGINT,
+    circulating_supply BIGINT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
