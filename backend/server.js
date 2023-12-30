@@ -5,20 +5,32 @@
 // table with minute-level data and also aggregates this data into hourly and daily
 // summaries for efficient storage and analysis. Only tokens with available prices
 // are stored and aggregated.
-
+require("dotenv").config(); // Loads environment variables from a .env file
 const express = require("express");
+const cors = require('cors');
+
+// ... other require statements ...
+const apiRoutes = require("./apiRoutes");
 const cron = require("node-cron");
 const axios = require("axios");
 const { Pool } = require("pg");
-require("dotenv").config(); // Loads environment variables from a .env file
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+
+// Enable CORS for all routes
+app.use(cors());
+
+// Use the API routes
+app.use("/api", apiRoutes);
+
 
 // Set up a connection pool to the PostgreSQL database
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
+module.exports = pool;
 
 // Function to test the database connection
 async function testConnection() {

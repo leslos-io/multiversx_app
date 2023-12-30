@@ -1,10 +1,8 @@
-"use client"
-// frontend/app/page.tsx
+// frontend/app/pages/tokens.js
 import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import TokenTable from './components/TokenTable';
+import TokenTable from '../components/TokenTable';
 
-export default function Home() {
+const TokensPage = () => {
   const [tokens, setTokens] = useState([]);
 
   useEffect(() => {
@@ -12,7 +10,6 @@ export default function Home() {
       try {
         const response = await fetch('http://localhost:3000/api/token-data');
         const data = await response.json();
-        console.log(data); // Log the fetched data
         setTokens(data);
       } catch (error) {
         console.error('Error fetching tokens:', error);
@@ -23,8 +20,11 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <div>
+      <h1>Token Data</h1>
       <TokenTable tokens={tokens} />
-    </main>
+    </div>
   );
-}
+};
+
+export default TokensPage;

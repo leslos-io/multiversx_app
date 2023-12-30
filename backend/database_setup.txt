@@ -44,3 +44,9 @@ CREATE TABLE token_prices_daily (
     circulating_supply NUMERIC,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+CREATE TABLE token_blacklist (
+    id SERIAL PRIMARY KEY,
+    identifier VARCHAR(255) UNIQUE NOT NULL
+);
