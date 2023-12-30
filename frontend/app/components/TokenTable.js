@@ -18,7 +18,7 @@ const TokenTable = ({ tokens }) => {
         id: 'identifier',
         header: 'identifier',
         cell: ({ row }) => row.original.identifier,
-      },
+      }, 
       {
         id: 'name',
         header: 'Name',

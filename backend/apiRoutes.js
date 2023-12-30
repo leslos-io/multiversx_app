@@ -73,7 +73,7 @@ LEFT JOIN
     )
     AND NOT (t.name LIKE '%LP')
     
-    AND NOT (t.ticker LIKE 'LP%');
+    AND NOT (t.ticker LIKE 'LP%'); 
       `;
     const result = await client.query(query);
     client.release();
