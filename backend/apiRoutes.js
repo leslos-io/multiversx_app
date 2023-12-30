@@ -62,10 +62,18 @@ LEFT JOIN
     token_prices_daily pd90d ON t.id = pd90d.token_id AND pd90d.timestamp = (SELECT MAX(timestamp) FROM token_prices_daily WHERE token_id = pd90d.token_id AND timestamp <= NOW() - INTERVAL '90 days')
 LEFT JOIN 
     token_prices_daily pdYTD ON t.id = pdYTD.token_id AND pdYTD.timestamp = (SELECT MAX(timestamp) FROM token_prices_daily WHERE token_id = pdYTD.token_id AND timestamp <= NOW() - INTERVAL '1 year')
-WHERE 
-    t.identifier NOT IN (SELECT identifier FROM token_blacklist);
-
-
+    WHERE 
+    t.identifier NOT IN (SELECT identifier FROM token_blacklist)
+    AND (
+        t.website IS NOT NULL AND t.website <> ''
+        OR NULLIF(t.social_links->>'blog', '') IS NOT NULL 
+        OR NULLIF(t.social_links->>'twitter', '') IS NOT NULL 
+        OR NULLIF(t.social_links->>'telegram', '') IS NOT NULL 
+        OR NULLIF(t.social_links->>'whitepaper', '') IS NOT NULL
+    )
+    AND NOT (t.name LIKE '%LP')
+    
+    AND NOT (t.ticker LIKE 'LP%');
       `;
     const result = await client.query(query);
     client.release();
