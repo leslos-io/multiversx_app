@@ -49,7 +49,7 @@ FROM
 LEFT JOIN 
     (SELECT DISTINCT ON (token_id) * FROM token_prices_minute ORDER BY token_id, timestamp DESC) pm ON t.id = pm.token_id
 LEFT JOIN 
-    token_prices_hourly ph1h ON t.id = ph1h.token_id AND ph1h.timestamp = (SELECT MAX(timestamp) FROM token_prices_hourly WHERE token_id = ph1h.token_id AND timestamp <= NOW() - INTERVAL '1 hour')
+    token_prices_minute ph1h ON t.id = ph1h.token_id AND ph1h.timestamp = (SELECT MAX(timestamp) FROM token_prices_minute WHERE token_id = ph1h.token_id AND timestamp <= NOW() - INTERVAL '60 minutes')
 LEFT JOIN 
     token_prices_hourly ph24h ON t.id = ph24h.token_id AND ph24h.timestamp = (SELECT MAX(timestamp) FROM token_prices_hourly WHERE token_id = ph24h.token_id AND timestamp <= NOW() - INTERVAL '24 hours')
 LEFT JOIN 
